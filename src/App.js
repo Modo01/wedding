@@ -1,27 +1,33 @@
+  // src/app.js
 import React, { useEffect, useMemo, useState } from "react";
 
 export default function App() {
-  // --- CONFIG: Edit these values ---
-  const COUPLE = { bride: "Urangunj", groom: "Munkhdulguun" };
+  // --- ТОХИРУУЛГА: Эдгээрийг өөрийнхөөрөө солино ---
+  const COUPLE = { bride: "Гүнжээ", groom: "Мөдө" }; 
   const WEDDING = {
-    dateISO: "2025-10-11T16:00:00",
-    venueName: "Evento Ballroom",
+    dateISO: "2025-10-11T16:00:00", // орон нутгийн цаг
+    venueName: "Evento Ballroom (Handu Hotel)",
     venueAddress:
-      "Chingunjav Street, 3rd Microdistrict, 6th Khoroo, Bayangol District, Ulaanbaatar",
-    // used for the embedded map (iframe)
-    mapQuery: "Evento Ballroom, Handu Hotel, Chingunjav Street, Bayangol, Ulaanbaatar",
-    // your share URL for the external Maps link:
+      "Chingunjav Street, 3-р микр, 6-р хороо, Баянгол дүүрэг, Улаанбаатар",
+    mapQuery:
+      "Evento Ballroom, Handu Hotel, Chingunjav Street, Bayangol, Ulaanbaatar",
+    // Хэрэв таны Google share линк байгаа бол энд тавь:
     mapOpenUrl: "https://www.google.com/maps/place/Evento+Ballroom/@47.9179519,106.8731607,17z/data=!3m1!4b1!4m6!3m5!1s0x5d9693b067ecd2e9:0x16930dafaf7f8948!8m2!3d47.9179483!4d106.8757356!16s%2Fg%2F11vc1kgfcn?entry=ttu&g_ep=EgoyMDI1MDkxMC4wIKXMDSoASAFQAw%3D%3D",
     hashtag: "#Modo&Gunjee2025",
   };
-  
+
   const TIMELINE = [
-    { time: "16:00", title: "Ceremony", desc: "Please take your seats." },
-    { time: "17:00", title: "Photos & Cocktails", desc: "Garden terrace." },
-    { time: "18:30", title: "Reception & Dinner", desc: "Ballroom level 3." },
-    { time: "20:00", title: "First Dance", desc: "Dance floor opens to all!" },
-    { time: "22:00", title: "Farewell", desc: "Sparkler send-off." },
+    { time: "16:00", title: "Ёслол", desc: "Суудлаа эзлээд тайван сууна уу." },
+    { time: "17:00", title: "Зураг ба зочлол", desc: "Цэцэрлэгийн терасст." },
+    {
+      time: "18:30",
+      title: "Хүлээн авалт, оройн зоог",
+      desc: "3-р давхар, хүлээн авалтын танхим.",
+    },
+    { time: "20:00", title: "Эхний бүжиг", desc: "Бүжгийн талбай нээгдэнэ." },
+    { time: "22:00", title: "Үдэн гаргалт", desc: "Очлууртай үдэлт." },
   ];
+
   const GALLERY = [
     "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=1600&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1600&auto=format&fit=crop",
@@ -39,10 +45,10 @@ export default function App() {
     return () => clearInterval(t);
   }, [targetDate]);
 
-  // --- RSVP demo (alert) ---
+  // --- RSVP (демо) ---
   const onRSVP = (e) => {
     e.preventDefault();
-    alert("Thank you! Your RSVP was recorded.");
+    alert("Баярлалаа! Таны ирэх эсэхийн мэдээлэл бүртгэгдлээ.");
     e.currentTarget.reset();
   };
 
@@ -51,13 +57,15 @@ export default function App() {
       <header className="nav">
         <div className="wrap">
           <a href="#home" className="brand">
-            {COUPLE.bride} & {COUPLE.groom}
+            {COUPLE.groom} & {COUPLE.bride}
           </a>
           <nav>
-            <a href="#story">Our Story</a>
-            <a href="#details">Details</a>
-            <a href="#gallery">Gallery</a>
-            <a href="#rsvp" className="btn small">RSVP</a>
+            <a href="#story">Бидний түүх</a>
+            <a href="#details">Баярын өдөр</a>
+            <a href="#gallery">Зурагт цомог</a>
+            <a href="#rsvp" className="btn small">
+              Ирэх эсэх
+            </a>
           </nav>
         </div>
       </header>
@@ -65,36 +73,51 @@ export default function App() {
       <section id="home" className="hero">
         <div className="overlay" />
         <div className="inner">
-          <p className="kicker">We are getting married</p>
-          <h1>{COUPLE.groom} & {COUPLE.bride}</h1>
-          <p className="meta">{formatDateLong(targetDate)} • {WEDDING.venueName}</p>
+          <p className="kicker">Бид гэрлэж байна</p>
+          <h1>
+            {COUPLE.bride} & {COUPLE.groom}
+          </h1>
+          <p className="meta">
+            {formatDateLongMN(targetDate)} • {WEDDING.venueName}
+          </p>
 
-          {/* Countdown */}
+          {/* Тоолуур */}
           <div className="countdown">
-            <Count label="Days" value={remain.days} />
-            <Count label="Hours" value={remain.hours} />
-            <Count label="Minutes" value={remain.minutes} />
-            <Count label="Seconds" value={remain.seconds} />
+            <Count label="Өдөр" value={remain.days} />
+            <Count label="Цаг" value={remain.hours} />
+            <Count label="Минут" value={remain.minutes} />
+            <Count label="Секунд" value={remain.seconds} />
           </div>
 
-          <a href="#rsvp" className="btn" style={{ marginTop: 16 }}>RSVP Now</a>
+          <a href="#rsvp" className="btn" style={{ marginTop: 16 }}>
+            Ирэхээ баталгаажуулах
+          </a>
         </div>
       </section>
 
       <section id="story" className="section">
         <div className="wrap">
-          <h2>Our Story</h2>
+          <h2>Бидний түүх</h2>
           <div className="cards">
-            <Card title="First Hello" text="A chance encounter became daily chats and shared playlists." />
-            <Card title="The Yes" text="On a quiet rooftop under the stars, we promised forever." />
-            <Card title="What’s Next" text="A life of travel, laughter, and way too many photos." />
+            <Card
+              title="Анхны мэндчилгээ"
+              text="Санамсаргүй танил солонгорсон дурсамж болон хувирсан."
+            />
+            <Card
+              title="Тийм ээ!"
+              text="Тагтны оддоор дор бид насан туршийн амлалтаа өгсөн."
+            />
+            <Card
+              title="Цаашдын амьдрал"
+              text="Аялал, инээд, зураг—дэндүү олон зураг 😊."
+            />
           </div>
         </div>
       </section>
 
       <section id="details" className="section">
         <div className="wrap">
-          <h2>The Day</h2>
+          <h2>Баярын өдөр</h2>
           <div className="grid-2">
             <ul className="timeline">
               {TIMELINE.map((it, i) => (
@@ -112,23 +135,28 @@ export default function App() {
               <h3>{WEDDING.venueName}</h3>
               <p>{WEDDING.venueAddress}</p>
               <div className="map">
-              <iframe
-  title="map"
-  loading="lazy"
-  referrerPolicy="no-referrer-when-downgrade"
-  src={`https://www.google.com/maps?q=${encodeURIComponent(WEDDING.mapQuery)}&output=embed`}
-/>
-
+                <iframe
+                  title="map"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  src={`https://www.google.com/maps?q=${encodeURIComponent(
+                    WEDDING.mapQuery
+                  )}&output=embed`}
+                />
               </div>
               <a
-      className="btn"
-  href={WEDDING.mapOpenUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(WEDDING.mapQuery)}`}
-  target="_blank"
-  rel="noreferrer"
->
-  Open in Google Maps
-</a>
-
+                className="btn"
+                href={
+                  WEDDING.mapOpenUrl ||
+                  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                    WEDDING.mapQuery
+                  )}`
+                }
+                target="_blank"
+                rel="noreferrer"
+              >
+                Google газрын зураг нээх
+              </a>
             </div>
           </div>
         </div>
@@ -136,59 +164,80 @@ export default function App() {
 
       <section id="gallery" className="section">
         <div className="wrap">
-          <h2>Gallery</h2>
+          <h2>Зурагт цомог</h2>
           <div className="gallery">
-            {GALLERY.map((src, i) => <img key={i} src={src} alt={`g-${i}`} />)}
+            {GALLERY.map((src, i) => (
+              <img key={i} src={src} alt={`g-${i}`} />
+            ))}
           </div>
+          <p style={{ marginTop: 12, color: "#6b7280" }}>
+            Зурагнуудаа {WEDDING.hashtag} хаштагтай хуваалцаарай.
+          </p>
         </div>
       </section>
 
       <section id="rsvp" className="section">
         <div className="wrap">
-          <h2>RSVP</h2>
+          <h2>Ирэх эсэх</h2>
           <form className="form" onSubmit={onRSVP}>
             <div className="row">
-              <Field label="Full name" name="name" required />
-              <Field label="Email" name="email" type="email" required />
+              <Field label="Овог нэр" name="name" required />
+              <Field label="И-мэйл" name="email" type="email" required />
             </div>
             <div className="row">
-              <Field label="Phone" name="phone" placeholder="(+976) 88xx xxxx" />
+              <Field label="Утас" name="phone" placeholder="(+976) 88xx xxxx" />
               <div className="field">
-                <label>Guests</label>
+                <label>Зочдын тоо</label>
                 <select name="guests" defaultValue="1">
-                  {[1,2,3,4,5].map(n => <option key={n} value={n}>{n}</option>)}
+                  {[1, 2, 3, 4, 5].map((n) => (
+                    <option key={n} value={n}>
+                      {n}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
             <div className="row">
               <div className="field">
-                <label>Attendance</label>
+                <label>Ирэх эсэх</label>
                 <div className="radios">
-                  <label><input type="radio" name="attend" value="yes" defaultChecked/> Accepts with joy</label>
-                  <label><input type="radio" name="attend" value="no" /> Declines with regret</label>
+                  <label>
+                    <input type="radio" name="attend" value="yes" defaultChecked /> Ирнэ
+                  </label>
+                  <label>
+                    <input type="radio" name="attend" value="no" /> Ирэхгүй
+                  </label>
                 </div>
               </div>
-              <Field label="Dietary needs" name="diet" placeholder="Vegetarian, halal, allergies…" />
+              <Field
+                label="Хоолны онцгой хэрэгцээ"
+                name="diet"
+                placeholder="Вег, халал, харшил…"
+              />
             </div>
             <div className="field">
-              <label>Message</label>
-              <textarea name="message" placeholder="Leave us a note" rows={4} />
+              <label>Санал хүсэлт</label>
+              <textarea name="message" placeholder="Мессеж үлдээнэ үү" rows={4} />
             </div>
-            <button className="btn" type="submit">Send RSVP</button>
+            <button className="btn" type="submit">
+              Илгээх
+            </button>
           </form>
         </div>
       </section>
 
       <footer className="footer">
         <div className="wrap">
-          <p>© {new Date().getFullYear()} {COUPLE.bride} & {COUPLE.groom} • {WEDDING.hashtag}</p>
+          <p>
+            © {new Date().getFullYear()} {COUPLE.bride} & {COUPLE.groom} • {WEDDING.hashtag}
+          </p>
         </div>
       </footer>
     </div>
   );
 }
 
-// --- Small components & helpers ---
+// --- Жижиг компонентууд & туслах функцууд ---
 function Card({ title, text }) {
   return (
     <div className="card">
@@ -217,9 +266,15 @@ function Count({ label, value }) {
   );
 }
 
-function formatDateLong(date) {
-  return date.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+function formatDateLongMN(date) {
+  // Монгол хэлний формат
+  return date.toLocaleDateString("mn-MN", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 }
+
 function getRemain(target) {
   const diff = Math.max(0, target.getTime() - Date.now());
   const sec = Math.floor(diff / 1000);
