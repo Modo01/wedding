@@ -90,7 +90,7 @@ export default function App() {
           </div>
 
           <a href="#rsvp" className="btn" style={{ marginTop: 16 }}>
-            Ирэхээ баталгаажуулах
+            Хуриманд оролцох
           </a>
         </div>
       </section>
