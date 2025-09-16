@@ -1,19 +1,28 @@
-  // src/app.js
+// src/app.js
 import React, { useEffect, useMemo, useState } from "react";
-
+import Guestbook from "./components/guestbook";
 export default function App() {
   // --- ТОХИРУУЛГА: Эдгээрийг өөрийнхөөрөө солино ---
-  const COUPLE = { bride: "Гүнжээ", groom: "Мөдө" }; 
+  const COUPLE = { bride: "Гүнжээ", groom: "Мөдө" };
+
   const WEDDING = {
     dateISO: "2025-10-11T16:00:00", // орон нутгийн цаг
-    venueName: "Evento Ballroom (Handu Hotel)",
+    venueName: "Evento Ballroom",
     venueAddress:
-      "Chingunjav Street, 3-р микр, 6-р хороо, Баянгол дүүрэг, Улаанбаатар",
+      "Дилав хутагт Жамсранжавын гудамж, 6-р хороо, Баянгол дүүрэг, Улаанбаатар",
     mapQuery:
       "Evento Ballroom, Handu Hotel, Chingunjav Street, Bayangol, Ulaanbaatar",
-    // Хэрэв таны Google share линк байгаа бол энд тавь:
-    mapOpenUrl: "https://www.google.com/maps/place/Evento+Ballroom/@47.9179519,106.8731607,17z/data=!3m1!4b1!4m6!3m5!1s0x5d9693b067ecd2e9:0x16930dafaf7f8948!8m2!3d47.9179483!4d106.8757356!16s%2Fg%2F11vc1kgfcn?entry=ttu&g_ep=EgoyMDI1MDkxMC4wIKXMDSoASAFQAw%3D%3D",
+    mapOpenUrl:
+      "https://www.google.com/maps/place/Evento+Ballroom/@47.9179519,106.8731607,17z/data=!3m1!4b1!4m6!3m5!1s0x5d9693b067ecd2e9:0x16930dafaf7f8948!8m2!3d47.9179483!4d106.8757356!16s%2Fg%2F11vc1kgfcn?entry=ttu",
     hashtag: "#Modo&Gunjee2025",
+  };
+
+  // 👉 ДАНСНЫ МЭДЭЭЛЭЛ (энд өөрийнхөө банкийг бич)
+  const BANK = {
+    bankName: "Хаан банк",
+    accountName: "Мөнхдөлгөөн",
+    accountNumber: "590005005090770986",
+    note: "Гүйлгээний утгад өөрийн нэрээ бичээрэй.",
   };
 
   const TIMELINE = [
@@ -28,6 +37,8 @@ export default function App() {
     { time: "22:00", title: "Үдэн гаргалт", desc: "Очлууртай үдэлт." },
   ];
 
+  // Анхаар: доорх 2 зураг нь public/images дотор байх ёстой
+  // public/images/gibly_wedding_1.png, public/images/gibly_wedding_2.png
   const GALLERY = [
     "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=1600&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1600&auto=format&fit=crop",
@@ -35,6 +46,8 @@ export default function App() {
     "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1600&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1501854140801-50d01698950b?q=80&w=1600&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1600&auto=format&fit=crop",
+    `${process.env.PUBLIC_URL}/images/gibly_wedding_1.png`,
+    `${process.env.PUBLIC_URL}/images/gibly_wedding_2.png`,
   ];
 
   // --- COUNTDOWN ---
@@ -45,11 +58,37 @@ export default function App() {
     return () => clearInterval(t);
   }, [targetDate]);
 
+  // --- LIGHTBOX ---
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  useEffect(() => {
+    document.body.style.overflow = galleryOpen ? "hidden" : "";
+    const onKey = (e) => {
+      if (galleryOpen && e.key === "Escape") setGalleryOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [galleryOpen]);
+
   // --- RSVP (демо) ---
   const onRSVP = (e) => {
     e.preventDefault();
     alert("Баярлалаа! Таны ирэх эсэхийн мэдээлэл бүртгэгдлээ.");
     e.currentTarget.reset();
+  };
+
+  // --- COPY ACCOUNT ---
+  const [copied, setCopied] = useState(false);
+  const copyAccount = async () => {
+    try {
+      await navigator.clipboard.writeText(BANK.accountNumber);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      alert("Хуулах боломжгүй байна. Дахин оролдоно уу.");
+    }
   };
 
   return (
@@ -63,6 +102,8 @@ export default function App() {
             <a href="#story">Бидний түүх</a>
             <a href="#details">Баярын өдөр</a>
             <a href="#gallery">Зурагт цомог</a>
+            <a href="#gifts">Бэлэг</a>{/* 👈 шинэ линк */}
+            <a href="#guestbook">Мэндчилгээ</a>
             <a href="#rsvp" className="btn small">
               Ирэх эсэх
             </a>
@@ -98,7 +139,7 @@ export default function App() {
       <section id="story" className="section">
         <div className="wrap">
           <h2>Бидний түүх</h2>
-          <div className="cards">
+        <div className="cards">
             <Card
               title="Анхны мэндчилгээ"
               text="Санамсаргүй танил солонгорсон дурсамж болон хувирсан."
@@ -170,9 +211,97 @@ export default function App() {
               <img key={i} src={src} alt={`g-${i}`} />
             ))}
           </div>
+
+          <div style={{ textAlign: "center", marginTop: 12 }}>
+            <button className="btn outline" onClick={() => setGalleryOpen(true)}>
+              Бүх зураг харах
+            </button>
+          </div>
+
           <p style={{ marginTop: 12, color: "#6b7280" }}>
             Зурагнуудаа {WEDDING.hashtag} хаштагтай хуваалцаарай.
           </p>
+        </div>
+      </section>
+
+      {/* LIGHTBOX: Бүх зураг */}
+      {galleryOpen && (
+        <div className="lightbox" role="dialog" aria-modal="true" aria-label="Бүх зураг">
+          <div className="backdrop" onClick={() => setGalleryOpen(false)} />
+          <div className="inner">
+            <button
+              className="close"
+              aria-label="Хаах"
+              onClick={() => setGalleryOpen(false)}
+              title="Хаах (Esc)"
+            >
+              ×
+            </button>
+            <h3 style={{ marginTop: 0, marginBottom: 12 }}>Бүх зураг</h3>
+            <div className="lgallery">
+              {GALLERY.map((src, i) => (
+                <img key={`lg-${i}`} src={src} alt={`full-${i}`} />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 🎁 БЭЛЭГ ХҮЛЭЭН АВАХ */}
+      <section id="gifts" className="section">
+        <div className="wrap">
+          <h2>Бэлэг</h2>
+          <div className="gift-grid">
+            {/* Зүүн тал: тайлбар + дансны мэдээлэл */}
+            <div className="box">
+              <p style={{ marginTop: 0 }}>
+                Таны ирц бол бидний хувьд хамгийн том бэлэг. Хэрэв бэлэг өгөхийг хүсвэл
+                бид шинэ амьдралаа эхлүүлж буй тул <b>мөнгөөр дурсгал</b> илүүд үзэж байна.
+                Харамсалтай нь хуриманд ирж чадахгүй бол доорх дансаар бэлгээ илгээх боломжтой.
+                <br />
+                <span style={{ color: "#6b7280" }}>{BANK.note}</span>
+              </p>
+
+              <div className="bank">
+                <div className="row">
+                  <span className="label">Банк</span>
+                  <span className="value">{BANK.bankName}</span>
+                </div>
+                <div className="row">
+                  <span className="label">Дансны нэр</span>
+                  <span className="value">{BANK.accountName}</span>
+                </div>
+                <div className="row">
+                  <span className="label">Дансны дугаар</span>
+                  <span className="value mono">{BANK.accountNumber}</span>
+                </div>
+
+                <div style={{ marginTop: 12, display: "flex", gap: 8, flexWrap: "wrap" }}>
+                  <button className="btn" onClick={copyAccount}>
+                    {copied ? "Хуулсан!" : "Дансны дугаарыг хуулах"}
+                  </button>
+                  <a className="btn outline" href="#guestbook">
+                    Мэндчилгээ илгээх
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Баруун тал: манай зураг */}
+            <div className="box">
+              <img
+                src={`${process.env.PUBLIC_URL}/images/couple.jpg`} // 👉 энэ зургийг public/images/couple.jpg байрлуул
+                alt="Манай зураг"
+                className="gift-photo"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="guestbook" className="section">
+        <div className="wrap">
+          <Guestbook /> {/* 👈 Use the Guestbook component */}
         </div>
       </section>
 
@@ -267,7 +396,6 @@ function Count({ label, value }) {
 }
 
 function formatDateLongMN(date) {
-  // Монгол хэлний формат
   return date.toLocaleDateString("mn-MN", {
     year: "numeric",
     month: "long",
