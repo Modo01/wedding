@@ -328,7 +328,7 @@ export default function App() {
             </div>
             <div className="row">
               <div className="field">
-                <label>Ирэх эсэх</label>
+                <label><strong>Ирэх эсэх</strong></label>
                 <div className="radios">
                   <label>
                     <input type="radio" name="attend" value="yes" defaultChecked /> Ирнэ
