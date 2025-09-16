@@ -338,11 +338,11 @@ export default function App() {
                   </label>
                 </div>
               </div>
-              <Field
+              {/* <Field
                 label="Хоолны онцгой хэрэгцээ"
                 name="diet"
                 placeholder="Вег, халал, харшил…"
-              />
+              /> */}
             </div>
             <div className="field">
               <label>Санал хүсэлт</label>
