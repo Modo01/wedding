@@ -19,31 +19,31 @@ export default function Guestbook() {
   };
 
   return (
-    <div>     <h2>Зочдын мэндчилгээ</h2>
-    <div className="guestbook">
- 
-      <p>Бидний баярыг хуваалцаж, урьдчилан баяр хүргэсэнд талархаж байна!</p>
+    <section id="guestbook" className="section">
+      <div className="wrap"> {/* Ensures same width as other sections */}
+        <div className="guestbook">
+          <h2>Зочдын мэндчилгээ</h2>
+          <p>Бидэнтэй баяртайг хуваалцаж, урьдчилан баяр хүргэсэнд талархаж байна!</p>
 
-      {thankYou ? (
-        <p>Таны мэндчилгээ бидэнд хүрлээ! Баярлалаа!</p>
-      ) : (
-        <form onSubmit={handleSubmit} className="guestbook-form">
-          <div className="field">
-            <textarea
-              name="message"
-              value={message}
-              onChange={handleMessageChange}
-              placeholder="Мэндчилгээ үлдээнэ үү"
-              rows={4}
-              required
-            />
-          </div>
-          <button type="submit" className="btn">
-            Мэндчилгээ илгээх
-          </button>
-        </form>
-      )}
-    </div>
-    </div>
+          {thankYou ? (
+            <p>Таны мэндчилгээ бидэнд хүрлээ! Баярлалаа!</p>
+          ) : (
+            <form onSubmit={handleSubmit} className="guestbook-form">
+              <div className="field">
+                <textarea
+                  name="message"
+                  value={message}
+                  onChange={handleMessageChange}
+                  placeholder="Мэндчилгээ үлдээнэ үү"
+                  rows={4}
+                  required
+                />
+              </div>
+              <button type="submit" className="btn">Мэндчилгээ илгээх</button>
+            </form>
+          )}
+        </div>
+      </div>
+    </section>
   );
 }
