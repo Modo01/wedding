@@ -24,6 +24,5 @@ export default function App() {
             <Guestbook />
             <RSVP />
             <Footer couple={COUPLE} wedding={WEDDING} />
-        </div>
-    );
+        </div>    );
 }
