@@ -42,7 +42,7 @@ export default function Hero({couple, wedding, formatDate}) {
     };
 
     const countdownBox = {
-        background: "rgba(32,32,32,0.6)",
+       // background: "rgba(32,32,32,0.6)",
         padding: "12px 18px",
         borderRadius: "12px",
         display: "flex",

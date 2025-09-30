@@ -10,6 +10,7 @@ export const WEDDING = {
     hashtag: "#Modo&Gunjee2025",
 };
 
+
 export const BANK = {
     bankName: "Хаан банк",
     accountName: "Мөнхдөлгөөн",
