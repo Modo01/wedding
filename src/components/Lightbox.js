@@ -29,9 +29,6 @@ export default function Lightbox({ show, onClose, images, title = "Бүх зур
                                 alt={`lightbox-${index}`}
                                 className="galleryImg"
                             />
-                            <div className="galleryOverlay">
-                                <span className="galleryZoom">Үзэх</span>
-                            </div>
                         </Col>
                     ))}
                 </Row>

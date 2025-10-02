@@ -240,20 +240,21 @@ body {
    ========================= */
 .timeline { position: relative; padding-left: 24px; }
 .timeline::before {
-  content: ""; position: absolute; left: 10px; top: 0; bottom: 0;
+  content: ""; position: absolute; left: 8px; top: 0; bottom: 0;
   width: 2px; border-radius: 2px; opacity: .8;
   background: linear-gradient(180deg, var(--rp-orange), var(--rp-pink));
 }
 .tItem {
-  display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 16px;
-  padding: 16px 0;
   position: relative;
+  display: grid;
+  grid-template-columns: 110px 1fr;  /* time | content */
+  gap: 12px 10px;   
+  padding: 14px 8px 14px 2px;
 }
+
 .tTime {
   font-weight: 700; letter-spacing: .2px; color: var(--rp-ink);
-  min-width: 120px; padding-left: 25px;
+  min-width: 100px; padding-left: 25px;
 }
 .tContent {}
 .tTitle { margin: 0 0 4px; font-weight: 700; color: var(--rp-ink); }

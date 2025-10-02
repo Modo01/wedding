@@ -17,12 +17,23 @@ export default function Details({ wedding, timeline }) {
             <Col xs={12} md={6}>
               <div className="timeline">
                 {timeline.map((item, index) => (
-                  <div className="tItem" key={index}>
+                  <div
+                    className="tItem"
+                    key={index}
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "90px 1fr", // narrower time column
+                      gap: "8px 12px",                 // smaller horizontal gap
+                      padding: "10px 4px",             // tighter padding
+                    }}
+                  >
                     <div className="tDot" />
                     <div className="tTime">{item.time}</div>
                     <div className="tContent">
-                      <h5 className="tTitle">{item.title}</h5>
-                      {item.desc && <p className="tDesc text-muted mb-0">{item.desc}</p>}
+                      <h5 className="tTitle mb-1">{item.title}</h5>
+                      {item.desc && (
+                        <p className="tDesc text-muted mb-0">{item.desc}</p>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -39,7 +50,9 @@ export default function Details({ wedding, timeline }) {
                   <div className="mapWrap">
                     <iframe
                       title="venue-map"
-                      src={`https://www.google.com/maps?q=${encodeURIComponent(wedding.mapQuery)}&output=embed`}
+                      src={`https://www.google.com/maps?q=${encodeURIComponent(
+                        wedding.mapQuery
+                      )}&output=embed`}
                       width="100%"
                       height="260"
                       style={{ border: 0 }}
