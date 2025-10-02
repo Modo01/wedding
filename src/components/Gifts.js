@@ -1,6 +1,7 @@
 // src/components/Gifts.js
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Image, Modal } from "react-bootstrap";
+import giftIMG from "../assets/gift.jpg";
 
 export default function Gifts({ bank }) {
   const [copied, setCopied] = useState(false);
@@ -8,7 +9,12 @@ export default function Gifts({ bank }) {
 
   const copyAccount = async () => {
     try {
-      await navigator.clipboard.writeText(bank.accountNumber);
+      const num = bank?.accountNumber ?? "";
+      if (!num) {
+        alert("Дансны дугаар байхгүй байна.");
+        return;
+      }
+      await navigator.clipboard.writeText(num);
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch {
@@ -17,45 +23,43 @@ export default function Gifts({ bank }) {
   };
 
   return (
-    <section id="gifts" className="section py-5">
+    <section id="gifts" className="section py-3 section--blush">
       <Container>
-        <h2 className="mb-4 text-center">Бэлэг</h2>
+        <div className="sectionCard">
+          <h2 className="mb-3 title--lux">
+            Бэлэг
+            <span className="titleAccent" />
+          </h2>
 
-        {/* ⬇️ Compact border wrapper (centered) */}
-        <div
-          className="mx-auto"
-          style={{
-            border: "2px solid #dee2e6", // Bootstrap "danger"
-            borderRadius: 12,
-            padding: 12,
-            maxWidth: 900, // tighten the overall width; adjust 680–900 as you prefer
-            width: "100%",
-          }}
-        >
-          <Row className="g-3 align-items-center justify-content-center text-center">
+          <Row className="align-items-center g-4">
             {/* Left: Message + Trigger */}
             <Col xs={12} md={6} lg={5} className="mx-auto">
-              <p className="mb-3">
-                <strong>Таны залбирал, оролцоо бол бидний хувьд хамгийн том бэлэг.</strong>
-                <br />
-                Харин хэрэв та хүрэлцэн ирж чадалгүй, сэтгэлийн мэндчилгээгээ бэлэг хэлбэрээр
-                илгээхийг хүсвэл, доорх товчийг дарна уу.
+              <p className="mb-3 text-muted">
+                <strong className="d-block mb-1" style={{ color: "var(--rp-ink)" }}>
+                  Таны залбирал, оролцоо бол бидний хувьд хамгийн том бэлэг.
+                </strong>
+                Хэрэв та биечлэн хүрэлцэн ирж чадахгүй байсан ч сэтгэлийн халуун мэндчилгээгээ
+                бэлэг хэлбэрээр илгээхийг хүсвэл, доорх товчийг дарна уу. 🧡💖
               </p>
 
-              <Button variant="danger" onClick={() => setShow(true)}>
+              <Button className="btn--pink" onClick={() => setShow(true)}>
                 Бэлэг илгээх
               </Button>
             </Col>
 
-            {/* Right: Couple Photo */}
-            <Col xs={12} md={5} lg={4} className="d-flex justify-content-center mx-auto">
-              <Image
-                src={`${process.env.PUBLIC_URL}/images/gift.jpg`}
-                alt="Манай зураг"
-                fluid
-                rounded
-                style={{ aspectRatio: "3/4", objectFit: "cover", maxWidth: 360 }}
-              />
+            {/* Right: Photo */}
+            <Col xs={12} md={6} lg={7} className="d-flex justify-content-center">
+              <div className="giftImgWrap">
+                <Image
+                  src={giftIMG}
+                  alt="Бэлэгийн зураг"
+                  loading="lazy"
+                  rounded
+                  width={1200}
+                  height={600}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </div>
             </Col>
           </Row>
         </div>
@@ -66,30 +70,32 @@ export default function Gifts({ bank }) {
           onHide={() => setShow(false)}
           centered
           aria-labelledby="gift-modal-title"
+          dialogClassName="giftModalDialog"        // ⬅️ optional wider dialog
+          contentClassName="giftModalContent"     
         >
           <Modal.Header closeButton>
             <Modal.Title id="gift-modal-title">Бэлгийн мэдээлэл</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
-            {bank?.note && <p className="text-muted small mb-3">{bank.note}</p>}
+            {bank?.note && <p className="text-muted small mb-3 giftNote">{bank.note}</p>}
 
-            <div className="p-3 bg-white border rounded">
-              <div className="d-flex justify-content-between mb-2">
+            <div className="p-3 bg-white border rounded giftCard">
+              <div className="giftRow">
                 <span className="text-muted">Банк</span>
-                <strong>{bank.bankName}</strong>
+                <strong>{bank?.bankName ?? "—"}</strong>
               </div>
-              <div className="d-flex justify-content-between mb-2">
+              <div className="giftRow">
                 <span className="text-muted">Дансны нэр</span>
-                <strong>{bank.accountName}</strong>
+                <strong>{bank?.accountName ?? "—"}</strong>
               </div>
-              <div className="d-flex justify-content-between mb-2">
+              <div className="giftRow">
                 <span className="text-muted">Дансны дугаар</span>
-                <strong>{bank.accountNumber}</strong>
+                <strong className="giftAccount">{bank?.accountNumber ?? "—"}</strong>
               </div>
 
               <div className="mt-3 d-flex gap-2 flex-wrap justify-content-center">
-                <Button variant="danger" onClick={copyAccount}>
+                <Button className="btn--pink" onClick={copyAccount} disabled={!bank?.accountNumber}>
                   {copied ? "Хуулсан!" : "Дансны дугаарыг хуулах"}
                 </Button>
               </div>
@@ -97,7 +103,7 @@ export default function Gifts({ bank }) {
           </Modal.Body>
 
           <Modal.Footer className="justify-content-center">
-            <Button variant="secondary" onClick={() => setShow(false)}>
+            <Button variant="light" onClick={() => setShow(false)}>
               Хаах
             </Button>
           </Modal.Footer>

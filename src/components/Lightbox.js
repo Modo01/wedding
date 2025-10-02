@@ -10,26 +10,35 @@ export default function Lightbox({ show, onClose, images, title = "Бүх зур
             size="xl"
             aria-labelledby="lightbox-modal"
             centered
+            dialogClassName="lightboxDialog"
+            contentClassName="lightboxContent"
         >
-            <Modal.Header closeButton>
-                <Modal.Title id="lightbox-modal">{title}</Modal.Title>
+            <Modal.Header closeButton className="border-0">
+                <Modal.Title id="lightbox-modal" className="w-100 text-center title--lux">
+                    {title}
+                    <div className="titleAccent"></div>
+                </Modal.Title>
             </Modal.Header>
+
             <Modal.Body>
                 <Row className="g-3">
                     {images.map((src, index) => (
-                        <Col key={index} xs={6} md={3}>
+                        <Col key={index} xs={6} md={3} className="galleryItem">
                             <Image
                                 src={src}
                                 alt={`lightbox-${index}`}
-                                thumbnail
-                                style={{ width: "100%", aspectRatio: "3/4", objectFit: "cover" }}
+                                className="galleryImg"
                             />
+                            <div className="galleryOverlay">
+                                <span className="galleryZoom">Үзэх</span>
+                            </div>
                         </Col>
                     ))}
                 </Row>
             </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={onClose}>
+
+            <Modal.Footer className="justify-content-center border-0">
+                <Button variant="light" className="btn--pink px-4" onClick={onClose}>
                     Хаах
                 </Button>
             </Modal.Footer>

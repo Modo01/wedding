@@ -1,24 +1,46 @@
 // src/components/Count.js
 import React from "react";
-import { Card } from "react-bootstrap";
 
 export default function Count({ label, value }) {
-    const v = String(value).padStart(2, "0");
+  const v = String(value).padStart(2, "0");
 
-    return (
-        <Card
-            bg="light"
-            className="text-center p-2"
-            style={{ minWidth: "60px", borderRadius: "16px" }}
-        >
-            <Card.Body className="p-1">
-                <div className="fw-bold fs-4 text-success" style={{ color: "#202020" }}>
-                    {v}
-                </div>
-                <div className="text-uppercase small text-muted" style={{ opacity: 0.7, letterSpacing: ".12em" }}>
-                    {label}
-                </div>
-            </Card.Body>
-        </Card>
-    );
+  return (
+    <div
+      className="countCard"
+      style={{
+        minWidth: "72px",
+        borderRadius: "16px",
+        padding: "12px 10px",
+        background: "rgba(255,255,255,0.85)",
+        backdropFilter: "blur(3px)",
+        border: "1px solid #f5d4d4",
+        boxShadow: "0 6px 16px rgba(0,0,0,0.06)",
+      }}
+    >
+      <div
+        className="countValue"
+        style={{
+          fontWeight: "700",
+          fontSize: "1.6rem",
+          background: "linear-gradient(135deg,#ff7e5f,#ff6aa8)",
+          WebkitBackgroundClip: "text",
+          backgroundClip: "text",
+          color: "transparent",
+        }}
+      >
+        {v}
+      </div>
+      <div
+        className="countLabel"
+        style={{
+          fontSize: "0.75rem",
+          textTransform: "uppercase",
+          letterSpacing: "0.12em",
+          color: "#666",
+        }}
+      >
+        {label}
+      </div>
+    </div>
+  );
 }
