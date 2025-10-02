@@ -1,8 +1,8 @@
 // src/components/Gifts.js
-import React, { useState } from "react";
-import { Container, Row, Col, Button, Image } from "react-bootstrap";
+import React, {useState} from "react";
+import {Container, Row, Col, Button, Image} from "react-bootstrap";
 
-export default function Gifts({ bank }) {
+export default function Gifts({bank}) {
     const [copied, setCopied] = useState(false);
 
     const copyAccount = async () => {
@@ -24,9 +24,9 @@ export default function Gifts({ bank }) {
                     {/* Left: Bank Info */}
                     <Col xs={12} md={7}>
                         <p>
-                            Таны ирц бол бидний хувьд хамгийн том бэлэг. Хэрэв бэлэг өгөхийг хүсвэл
-                            бид шинэ амьдралаа эхлүүлж буй тул <strong>мөнгөөр дурсгал</strong> илүүд үзэж байна.
-                            <br />
+                            Таны ирц бидэнд хамгийн том бэлэг юм. Хэрэв бэлэг өгөхийг хүсвэл бид шинэ амьдралаа эхлүүлж
+                            буй тул <strong>мөнгөн дэжлэг</strong> үзүүлэхийг илүүд үзэж байна. Гүйлгээний утгад
+                            өөрийн нэрээ бичээрэй.<br/>
                             <span className="text-muted">{bank.note}</span>
                         </p>
 
@@ -59,7 +59,7 @@ export default function Gifts({ bank }) {
                             alt="Манай зураг"
                             fluid
                             rounded
-                            style={{ aspectRatio: "3/4", objectFit: "cover" }}
+                            style={{aspectRatio: "3/4", objectFit: "cover"}}
                         />
                     </Col>
                 </Row>

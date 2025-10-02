@@ -1,99 +1,65 @@
 // src/components/Hero.js
 import React from "react";
-import {Container, Row, Col, Button, Image} from "react-bootstrap";
+import { Container, Row, Col, Button, Image } from "react-bootstrap";
 import Count from "./Count";
 import useCountdown from "../hooks/useCountdown";
 import Flowers from "../assets/Flowers.png";
 
-export default function Hero({couple, wedding, formatDate}) {
+export default function Hero({ couple, wedding, formatDate }) {
     const targetDate = new Date(wedding.dateISO);
     const remain = useCountdown(targetDate);
 
+    return (
+        <section
+            id="hero"
+            className="d-flex align-items-center text-center text-white"
+            style={{
+                minHeight: "100vh",
+                background: `url('https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=2400') center/cover no-repeat`,
+                fontFamily: "'Cormorant Infant', serif",
+                position: "relative",
+            }}
+        >
+            {/* Overlay */}
+            <div
+                className="position-absolute top-0 start-0 w-100 h-100"
+                style={{ backgroundColor: "rgba(0,0,0,0.45)" }}
+            ></div>
 
+            <Container className="position-relative">
+                <Row className="justify-content-center">
+                    <Col md={8}>
+                        {/* Flowers */}
+                        <Image src={Flowers} alt="Flowers" fluid className="mb-3" style={{ maxWidth: "200px" }} />
 
+                        <p className="text-uppercase opacity-75 letter-spacing-1 mb-2">Бид гэрлэж байна</p>
+                        <h1 className="mb-2" style={{ fontSize: "clamp(36px, 7vw, 64px)" }}>
+                            {couple.groom} & {couple.bride}
+                        </h1>
+                        <p className="opacity-75 mb-3">
+                            {formatDate(targetDate)} • {wedding.venueName}
+                        </p>
 
-    const heroStyle = {
-        minHeight: "90vh",
-        backgroundImage: `url('https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=2400')`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        position: "relative",
-        color: "white",
-        display: "flex",
-        alignItems: "center",
-        fontFamily: "'Cormorant Infant', serif",
-    };
+                        {/* Countdown */}
+                        <div className="d-flex justify-content-center gap-3 mb-3 p-3 rounded ">
+                            <Count label="Өдөр" value={remain.days} />
+                            <Count label="Цаг" value={remain.hours} />
+                            <Count label="Минут" value={remain.minutes} />
+                            <Count label="Секунд" value={remain.seconds} />
+                        </div>
 
-    const overlayStyle = {
-        position: "absolute", inset: 0, background: "rgba(0,0,0,0.45)",
-    };
-
-    const innerStyle = {
-        position: "relative", textAlign: "center", width: "100%",
-    };
-
-    const buttonStyle = {
-        backgroundColor: "transparent", border: "2px solid #d6bfa7", // beige
-        color: "#d6bfa7", padding: "10px 26px", fontSize: "18px", borderRadius: "30px", transition: "all 0.3s ease",
-    };
-
-    const buttonHoverStyle = {
-        backgroundColor: "#d6bfa7", color: "#202020",
-    };
-
-    const countdownBox = {
-       // background: "rgba(32,32,32,0.6)",
-        padding: "12px 18px",
-        borderRadius: "12px",
-        display: "flex",
-        justifyContent: "center",
-        gap: "20px",
-        marginBottom: "22px",
-    };
-
-    return (<section id="hero" style={heroStyle}>
-        <div style={overlayStyle}/>
-        <Container style={innerStyle}>
-            <Row className="justify-content-center">
-                <Col md={8}>
-                    {/* Flowers on top */}
-                    <Image
-                        src={Flowers}
-                        alt="Flowers"
-                        fluid
-                        style={{maxWidth: "200px", marginBottom: "20px"}}
-                    />
-
-                    <p style={{textTransform: "uppercase", letterSpacing: ".3em", opacity: 0.9}}>
-                        Бид гэрлэж байна
-                    </p>
-                    <h1 style={{fontSize: "clamp(36px, 7vw, 64px)", margin: ".3em 0 .2em"}}>
-                        {couple.bride} & {couple.groom}
-                    </h1>
-                    <p style={{opacity: 0.9, marginBottom: "18px"}}>
-                        {formatDate(targetDate)} • {wedding.venueName}
-                    </p>
-
-                    {/* Countdown with transparent bg */}
-                    <div style={countdownBox}>
-                        <Count label="Өдөр" value={remain.days}/>
-                        <Count label="Цаг" value={remain.hours}/>
-                        <Count label="Минут" value={remain.minutes}/>
-                        <Count label="Секунд" value={remain.seconds}/>
-                    </div>
-
-                    {/* Custom button */}
-                    <Button
-                        href="#rsvp"
-                        size="lg"
-                        style={buttonStyle}
-                        onMouseOver={(e) => Object.assign(e.target.style, buttonHoverStyle)}
-                        onMouseOut={(e) => Object.assign(e.target.style, buttonStyle)}
-                    >
-                        Хуриманд оролцох
-                    </Button>
-                </Col>
-            </Row>
-        </Container>
-    </section>);
+                        {/* Button */}
+                        <Button
+                            href="#rsvp"
+                            size="lg"
+                            variant="outline-light"
+                            className="border-beige text-beige rounded-pill px-4 py-2"
+                        >
+                            Хуриманд оролцох
+                        </Button>
+                    </Col>
+                </Row>
+            </Container>
+        </section>
+    );
 }
