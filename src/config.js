@@ -12,7 +12,7 @@ export const WEDDING2 = {
 };
 
 export const WEDDING1 = {
-    dateISO: "2025-10-11T12:30:00",
+    dateISO: "2025-10-11T12:00:00",
     churchName: "Авралын зар чуулган",
     venueName: "Авралын зар чуулган",
     venueAddress: "121, 5-р хороо, Баянгол дүүрэг, Улаанбаатар",
