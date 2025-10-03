@@ -1,8 +1,9 @@
 // src/config.js
 export const COUPLE = { bride: "Гүнжээ", groom: "Мөдө" };
 
-export const WEDDING = {
-    dateISO: "2025-10-11T16:30:00",
+export const WEDDING2 = {
+    dateISO: "2025-10-11T12:30:00",
+    churchName: "Найдвар чуулган",
     venueName: "Evento Ballroom",
     venueAddress: "Дилав хутагт Жамсранжавын гудамж, 6-р хороо, Баянгол дүүрэг, Улаанбаатар",
     mapQuery: "Evento Ballroom, Handu Hotel, Chingunjav Street, Bayangol, Ulaanbaatar",
@@ -10,6 +11,15 @@ export const WEDDING = {
     hashtag: "#Modo&Gunjee2025",
 };
 
+export const WEDDING1 = {
+    dateISO: "2025-10-11T12:30:00",
+    churchName: "Найдвар чуулган",
+    venueName: "Найдвар чуулган",
+    venueAddress: "Чингүнжавын гудамж, 6-р хороо, Баянгол дүүрэг, Улаанбаатар",
+    mapQuery: "Naidvar Christiin chuulgan WV8G+4XM, BGD - 2 khoroo, Ulaanbaatar 16050",
+    mapOpenUrl: "https://maps.app.goo.gl/5YHct14MVA5mUbcp7",
+    hashtag: "#Modo&Gunjee2025",
+};
 
 export const BANK = {
     bankName: "Хаан банк",
@@ -18,7 +28,13 @@ export const BANK = {
     note: "Гүйлгээний утгад өөрийн нэрээ бичээрэй.",
 };
 
-export const TIMELINE = [
+export const TIMELINE1 = [
+    { time: "12:00", title: "Ёслол эхлэх", desc: "Зочид чуулганд орж ирэн суудлаа олж сууцгаан Гэрлэх ёслол эхэлнэ." },
+    { time: "13:00", title: "Номлол", desc: "Пастор номлол хийх бөгөөд хоёр хосыг адислах болно." },
+    { time: "13:00", title: "Ерөөл", desc: "Хоёр хосыг аав ээж нар ерөөн залбирна. " },
+    { time: "14:00", title: "Ёслол дуусах", desc: "Ёслолын үйл ажиллагаа дуусан, хоёр хосыг үдэж өгнө." },
+];
+export const TIMELINE2 = [
     { time: "16:30", title: "Зураг ба зочлол", desc: "Угтах хэсэгт ирэн өөрсдийн суудлыг харан зураг даруулах." },
     { time: "17:00", title: "Найр эхлэх", desc: "Хуримын цайллаганы үйл ажиллагаа албан ёсоор эхэлнэ." },
     { time: "18:00", title: "Танилцах", desc: "Найранд ирсэн хүргэн болон бэрийн талынхан танилцана." },

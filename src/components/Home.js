@@ -8,19 +8,20 @@ import Guestbook from "./Guestbook";
 import RSVP from "./RSVP";
 import Footer from "./Footer";
 
-import {COUPLE, WEDDING, BANK, TIMELINE, GALLERY} from "../config";
+import {COUPLE, WEDDING1, WEDDING2, BANK, TIMELINE1, TIMELINE2, GALLERY} from "../config";
 import {formatDateLongMN} from "../utils/date";
 
 export function Home() {
     return (
         <div className="site">
-            <Hero couple={COUPLE} wedding={WEDDING} formatDate={formatDateLongMN}/>
+            <Hero couple={COUPLE} wedding={WEDDING1} formatDate={formatDateLongMN}/>
             <Story/>
-            <Details wedding={WEDDING} timeline={TIMELINE}/>
-            <Gallery gallery={GALLERY} wedding={WEDDING}/>
+            <Details wedding={WEDDING1} timeline={TIMELINE1} title="Ёслолын дэлгэрэнгүй" />
+            <Details wedding={WEDDING2} timeline={TIMELINE2} title="Цайллагын дэлгэрэнгүй" />
+            <Gallery gallery={GALLERY} wedding={WEDDING1}/>
             <Gifts bank={BANK}/>
             <Guestbook/>
             <RSVP/>
-            <Footer couple={COUPLE} wedding={WEDDING}/>
+            <Footer couple={COUPLE} wedding={WEDDING1}/>
         </div>);
 }

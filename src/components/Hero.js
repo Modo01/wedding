@@ -60,10 +60,11 @@ export default function Hero({ couple, wedding, formatDate }) {
               <span className="heroGradientText">{couple.groom}</span> &{" "}
               <span className="heroGradientText">{couple.bride}</span>
             </h1>
-
+          
             <p className="opacity-75 mb-4">
-              {formatDate(targetDate)} • {wedding.venueName}
+              {formatDate(targetDate)} • {wedding.churchName}
             </p>
+          
 
             {/* Countdown */}
             <div className="d-flex justify-content-center gap-3 mb-4 p-3 rounded heroCounter">

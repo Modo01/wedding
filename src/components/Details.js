@@ -2,13 +2,13 @@
 import React from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 
-export default function Details({ wedding, timeline }) {
+export default function Details({ wedding, timeline, title = "Баярын өдөр" }) {
   return (
     <section id="details" className="section py-3 section--blush">
       <Container>
         <div className="sectionCard">
           <h2 className="mb-3 title--lux">
-            Баярын өдөр
+            {title}
             <span className="titleAccent" />
           </h2>
 
@@ -22,9 +22,9 @@ export default function Details({ wedding, timeline }) {
                     key={index}
                     style={{
                       display: "grid",
-                      gridTemplateColumns: "90px 1fr", // narrower time column
-                      gap: "8px 12px",                 // smaller horizontal gap
-                      padding: "10px 4px",             // tighter padding
+                      gridTemplateColumns: "90px 1fr",
+                      gap: "8px 12px",
+                      padding: "10px 4px",
                     }}
                   >
                     <div className="tDot" />

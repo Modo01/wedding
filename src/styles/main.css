@@ -339,3 +339,4 @@ body {
 }
 .lightboxContent .galleryItem:hover .galleryOverlay { opacity: 1; }
 .lightboxContent .galleryItem:hover .galleryZoom { transform: translateY(0); }
+

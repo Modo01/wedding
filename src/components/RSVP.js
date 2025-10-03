@@ -94,9 +94,12 @@ export default function RSVP() {
                 <Col xs={12} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label><strong>Ирэх эсэх</strong></Form.Label>
-                    <div className="d-flex gap-3 radios--row">
-                      <Form.Check type="radio" name="attend" value="yes" label="Ирнэ" defaultChecked />
-                      <Form.Check type="radio" name="attend" value="no" label="Ирэхгүй" />
+                    <div className="d-flex flex-wrap gap-3 radios--row">
+                      <Form.Check type="radio" name="attend" value="both" label="2ууланд нь очно" defaultChecked />
+                      <Form.Check type="radio" name="attend" value="ceremony" label="Ёслолд л очно"  />
+                      <Form.Check type="radio" name="attend" value="party" label="Цайллаганд л очно" />
+                      <Form.Check type="radio" name="attend" value="no" label="Очиж амжихгүй эсвэл боломжгүй байна." />
+
                     </div>
                   </Form.Group>
                 </Col>
