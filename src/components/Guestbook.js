@@ -15,7 +15,8 @@ export default function Guestbook() {
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const msgs = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setMessages(msgs);
-      // Optional: scroll to top whenever new message arrives
+
+      // Scroll to top when new message arrives
       if (listRef.current) listRef.current.scrollTo({ top: 0, behavior: "smooth" });
     });
     return () => unsubscribe();
@@ -30,7 +31,25 @@ export default function Guestbook() {
       fromWho: form.fromWho.value.trim(),
       timestamp: new Date().toISOString(),
     };
-    if (!messageData.message || !messageData.fromWho) return;
+
+    // Validation
+    if (!messageData.message) {
+      setAlert({
+        show: true,
+        variant: "danger",
+        message: "Мэндчилгээ хоосон байж болохгүй.",
+      });
+      return;
+    }
+
+    if (!messageData.fromWho) {
+      setAlert({
+        show: true,
+        variant: "danger",
+        message: "Нэрээ оруулна уу. Хоосон байж болохгүй.",
+      });
+      return;
+    }
 
     try {
       await addDoc(collection(db, "messages"), messageData);
@@ -50,14 +69,12 @@ export default function Guestbook() {
     }
   };
 
-
-
   return (
     <section id="guestbook" className="section py-3 section--blush">
       <Container>
         <div className="sectionCard">
           <h2 className="mb-3 title--lux">
-             Мэндчилгээ болон залбирал
+            Мэндчилгээ болон залбирал
             <span className="titleAccent" />
           </h2>
 
@@ -80,7 +97,9 @@ export default function Guestbook() {
 
           <Form onSubmit={handleSubmit} className="guestbookForm mb-5">
             <Form.Group controlId="message" className="mb-3">
-              <Form.Label><strong>Мэндчилгээ болон залбирал</strong></Form.Label>
+              <Form.Label>
+                <strong>Мэндчилгээ болон залбирал</strong>
+              </Form.Label>
               <Form.Control
                 as="textarea"
                 rows={4}
@@ -92,7 +111,9 @@ export default function Guestbook() {
             </Form.Group>
 
             <Form.Group controlId="fromWho" className="mb-4">
-              <Form.Label><strong>Хэнээс</strong></Form.Label>
+              <Form.Label>
+                <strong>Хэнээс</strong>
+              </Form.Label>
               <Form.Control
                 type="text"
                 name="fromWho"
@@ -122,19 +143,18 @@ export default function Guestbook() {
                   {messages.map((msg) => (
                     <div className="mscrollItem comfy" key={msg.id}>
                       <div className="quoteMark">“</div>
-                        <div className="vscrollMeta">
-                        <strong className="d-block">{msg.fromWho} <small className="text-muted">
-                          {String(msg.timestamp || "").split("T")[0]}
-                        </small></strong>
-                        
+                      <div className="vscrollMeta">
+                        <strong className="d-block">
+                          {msg.fromWho}{" "}
+                          <small className="text-muted">
+                            {String(msg.timestamp || "").split("T")[0]}
+                          </small>
+                        </strong>
                       </div>
                       <p className="mscrollMessage mb-3">{msg.message}</p>
-                    
                     </div>
                   ))}
                 </div>
-
-              
               </>
             )}
 
