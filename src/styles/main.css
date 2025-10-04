@@ -437,96 +437,74 @@ body {
   vertical-align: middle;
 }
 
-/* ===== Story card uses its own background photo ===== */
+/* Card background (desktop) */
 .sectionCard.storyBg {
   position: relative;
-  background-size: cover;
-  background-position: center;      /* try 'center top' if faces are high */
+  background-size: cover;           /* desktop: fill nicely */
+  background-position: center;
   background-repeat: no-repeat;
-
-  /* remove default white card styling if any */
   background-color: transparent !important;
-  border: none;
-  box-shadow: none;
-
+  border: none; box-shadow: none;
   border-radius: 16px;
-  padding: 0;                       /* we’ll pad .storyInner instead */
+  padding: 0;
   overflow: hidden;
 }
 
-/* soft overlay for readability */
+/* Soft overlay for readability */
 .sectionCard.storyBg::before {
   content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.30),
-    rgba(0, 0, 0, 0.45)
-  );
-  pointer-events: none;
-  z-index: 0;
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,.30), rgba(0,0,0,.45));
+  pointer-events: none; z-index: 0;
 }
 
-/* inner wrapper: adds padding from ALL sides and limits text width */
+/* Inner content block */
 .storyInner {
-  position: relative;
-  z-index: 1;
-  padding: clamp(24px, 6vw, 56px);  /* ← comfy padding on all sides */
-  max-width: 860px;                 /* keeps lines readable */
-  margin: 0 auto;                   /* center the text block */
+  position: relative; z-index: 2;
+  padding: clamp(24px, 6vw, 56px);
+  max-width: 860px; margin: 0 auto;
   border-radius: 16px;
-
-  /* optional ultra-light glass for busy photos; tweak or remove */
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255,255,255,0.06);
   backdrop-filter: blur(1.5px);
 }
 
-/* make ALL text inside the story card white */
-#story .storyInner,
-#story .storyInner p,
-#story .storyInner h1,
-#story .storyInner h2,
-#story .storyInner h3,
-#story .storyInner h4,
-#story .storyInner li,
-#story .storyInner span,
-#story .storyInner a {
-  color: #fff;
-}
-
-/* main paragraph styling */
-.storyTextProse {
-  line-height: 1.75;
-  font-size: clamp(15px, 1.05rem, 18px);
-  margin: 0;
-}
-
-/* keep the heading readable */
-#story .title--lux { color: #fff; }
-
-/* FIX: underline sits BELOW the title (not to the right), only here */
+/* Text to white */
+#story .storyInner, #story .storyInner * { color: #fff; }
+.storyTextProse { line-height: 1.75; font-size: clamp(15px,1.05rem,18px); margin: 0; }
 #story .titleAccent {
-  width: 64px;
-  height: 4px;
-  margin-top: 8px;
-  margin-left: 50%;
-  border-radius: 2px;
-  background: #ffffffcc;  /* semi-white bar */
+  display: block; width: 64px; height: 4px; margin: 8px auto 0;
+  border-radius: 2px; background: #ffffffcc;
 }
 
-/* mobile polish: slightly stronger overlay & tighter block */
+/* ===== Phone fix: show full image, no left/right crop ===== */
+.storyBgImg {
+  display: none;                    /* hidden on desktop */
+}
+
 @media (max-width: 576px) {
-  .sectionCard.storyBg::before {
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.40),
-      rgba(0, 0, 0, 0.4)
-    );
+  /* Hide desktop background and use an IMG instead */
+  .sectionCard.storyBg {
+    background-image: none !important;
   }
+
+   .storyBgImg {
+    display: block;
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;        /* ← тал талаас нь тайрч тааруулна */
+    object-position: 60% 40%; /* ← төвд барина. Хэрэв баруун тийш бага зэрэг
+                                 зөрүүлэх бол 60% гэх мэт болгож болно */
+    z-index: 1;
+  }
+
+  /* Stronger overlay on phones for readability */
+  .sectionCard.storyBg::before {
+    background: linear-gradient(to bottom, rgba(0,0,0,.40), rgba(0,0,0,.45));
+    z-index: 2;                     /* above the image */
+  }
+
+  /* Tighter padding on small screens */
   .storyInner {
-    padding: 20px;
-    max-width: 94%;
-    border-radius: 12px;
+    padding: 20px; max-width: 94%; border-radius: 12px;
   }
 }
