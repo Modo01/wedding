@@ -11,7 +11,6 @@ export default function RSVP() {
     e.preventDefault();
     const rsvpData = {
       name: e.target.name.value,
-      email: e.target.email.value,
       phone: e.target.phone.value,
       message: e.target.message.value,
       guestsAdult: e.target.guestsAdult.value,
@@ -61,36 +60,30 @@ export default function RSVP() {
                     <Form.Control type="text" name="name" placeholder="Овог нэр" required className="input--soft" />
                   </Form.Group>
                 </Col>
-                <Col xs={12} md={6}>
-                  <Form.Group controlId="rsvpEmail" className="mb-3">
-                    <Form.Label>И-мэйл</Form.Label>
-                    <Form.Control type="email" name="email" placeholder="И-мэйл" required className="input--soft" />
+                  <Col xs={12} md={6}>
+                  <Form.Group controlId="rsvpPhone" className="mb-3">
+                    <Form.Label>Утас</Form.Label>
+                    <Form.Control type="tel" inputMode="numeric" name="phone" placeholder="Утасны дугаар" className="input--soft" />
                   </Form.Group>
                 </Col>
               </Row>
 
               <Row className="mb-3">
                 <Col xs={12} md={6}>
-                  <Form.Group controlId="rsvpPhone" className="mb-3">
-                    <Form.Label>Утас</Form.Label>
-                    <Form.Control type="tel" inputMode="numeric" name="phone" placeholder="Утасны дугаар" className="input--soft" />
-                  </Form.Group>
-                </Col>
-                <Col xs={12} md={6}>
                   <Form.Group controlId="guestsAdult" className="mb-3">
                     <Form.Label>Том хүний тоо</Form.Label>
                     <Form.Control type="number" name="guestsAdult" placeholder="Том хүний тоо" required min={1} className="input--soft" />
                   </Form.Group>
                 </Col>
-              </Row>
-
-              <Row>
-                <Col xs={12} md={6}>
+                 <Col xs={12} md={6}>
                   <Form.Group controlId="guestsKid" className="mb-3">
                     <Form.Label>Хүүхдийн тоо</Form.Label>
                     <Form.Control type="number" name="guestsKid" placeholder="Хүүхдийн тоо" className="input--soft" />
                   </Form.Group>
                 </Col>
+              </Row>
+
+              <Row>
                 <Col xs={12} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label><strong>Ирэх эсэх</strong></Form.Label>
